@@ -1,10 +1,11 @@
 import vpython, requests, json
+from threecommon import *
 
 HOST_NAME, HOST_PORT = "localhost", 80
 EXPECTED_PROPERTIES = ['id', 'script', 'pos', 'name', 'color']
 WORLD = []
 
-vpython.scene.title = f"remote sim @ {HOST_NAME}:{HOST_PORT}"
+vpython.scene.title = f"remote sim at {HOST_NAME}:{HOST_PORT}"
 
 def fetch_world():
     r = requests.get(f"http://{HOST_NAME}:{HOST_PORT}/world")
@@ -41,8 +42,17 @@ class Entity:
         self.name = entity_json["name"]
         self.created_at = entity_json["created_at"]
         self.modified_at = entity_json["modified_at"]
-
-        self.body = vpython.box(pos = vpython.vec(*self.pos))
+        for k in DEFAULT_PROPERTIES_ON_CREATE:
+            if not k in entity_json:
+                entity_json[k] = DEFAULT_PROPERTIES_ON_CREATE[k]
+        shapes = {'box':vpython.box, 'sphere':vpython.sphere}
+        print(f"radius: {entity_json['radius']}")
+        self.body = shapes[entity_json['shape']](pos = vpython.vec(*self.pos),
+                                                 size = vpython.vec(*entity_json['size']),
+                                                 axis = vpython.vec(*entity_json['axis']),
+                                                 color = vpython.vec(*entity_json['color']),
+                                                 radisu = entity_json['radius'])
+        print(self.body.__dict__)
 
 print("fetching world...")
 load_world()

@@ -2,13 +2,14 @@ import datetime
 
 from bottle import route, run, request, response, debug, default_app
 import uuid, json
+from threecommon import *
 
 box_uuid = "69c7e584-0907-4dad-9c6f-12550fb69445"
 
 WORLD = {
     box_uuid:{
         "name":"box1",
-        "shape":"box",
+        "shape":"sphere",
         "pos":(0, 0, 0),
         "script":None,
         "id": box_uuid,
@@ -20,11 +21,7 @@ WORLD = {
 SCRIPTS = {}
 STARTUP = datetime.datetime.now()
 
-REQUIRED_PROPERTIES_ON_CREATE = ['pos', 'shape']
-NULLABLE_PROPERTIES_ON_CREATE = ['script']
-FILLABLE_PROPERTIES_ON_CREATE = ['pos', 'shape', 'name', 'script']
-READONLY_PROPERTIES = ['id', 'shape', 'script', 'created_at', 'modified_at']
-VALID_SHAPES = ['box', 'sphere']
+
 
 def is_float(n):
     try:
