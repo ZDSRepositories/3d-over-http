@@ -9,7 +9,7 @@ box_uuid = "69c7e584-0907-4dad-9c6f-12550fb69445"
 WORLD = {
     box_uuid:{
         "name":"box1",
-        "shape":"sphere",
+        "shape":"box",
         "pos":(0, 0, 0),
         "script":None,
         "id": box_uuid,

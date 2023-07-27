@@ -1,5 +1,6 @@
 import vpython, requests, json
 from threecommon import *
+from concurrent.futures import ThreadPoolExecutor # workaround for python concurrency bug
 
 HOST_NAME, HOST_PORT = "localhost", 80
 EXPECTED_PROPERTIES = ['id', 'script', 'pos', 'name', 'color']
